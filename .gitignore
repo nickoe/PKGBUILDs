@@ -1,0 +1,10 @@
+# Makepkg stuff
+*/pkg
+*/src
+*/*.pkg.tar.xz
+*/*.src.tar.gz
+
+# Potential soruce files
+*/*.zip
+*/*.tar.gz
+
