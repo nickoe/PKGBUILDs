@@ -8,3 +8,5 @@
 */*.zip
 */*.tar.gz
 
+# Editors tempoary stuff
+*~
