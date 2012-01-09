@@ -1,9 +1,9 @@
 # Maintainer: Nick Østergaard <oe dot nick at gmail dot com>
 
 pkgname=kicad-bzr-qi-hardware-patches
-pkgver=2448
+pkgver=20120109
 pkgrel=1
-pkgdesc="This is KiCad with the Qi Hardware patched added"
+pkgdesc="This is KiCad with the Qi Hardware patched added. This gives command line argument capabilities."
 arch=('i686' 'x86_64')
 url="http://iut-tice.ujf-grenoble.fr/kicad/"
 license=('GPL')
