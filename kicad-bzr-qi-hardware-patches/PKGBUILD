@@ -31,7 +31,7 @@ build() {
   if [ ! -d ${srcdir}/${_bzrmod} ] ; then
     bzr co --lightweight -r ${_bzrver} ${_bzrtrunk} ${_bzrmod}
   else
-    bzr up ${_bzrmod}
+    bzr up -r ${_bzrver} ${_bzrmod}
   fi
   msg "BZR checkout done or server timeout"
 
@@ -45,19 +45,22 @@ build() {
 	fi
 	msg "GIT checkout done or server timeout"
 
+	msg "Patching..."
 	# Apply the patches
   cd ${srcdir}/${_bzrmod}
-	ln -s ${srcdir}/${_gitmod}/eda-tools/kicad-patches patches
+	ln -f -s ${srcdir}/${_gitname}/kicad-patches patches
+#	cp -r ${srcdir}/${_gitname}/kicad-patches patches
 	quilt push -a
 
+	msg "Building..."
 	# Build kicad
   mkdir -p build/Release && cd build/Release
-  cmake ../.. -DKICAD_STABLE_VERSION=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-  make -j 5
+	cmake ../.. -DKICAD_STABLE_VERSION=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+	make -j 5
 }
 
 package() {
 	# Install kicad
   cd ${srcdir}/${_bzrmod}/build/Release
-  make DESTDIR=${pkgdir} install
+	make DESTDIR=${pkgdir} install
 }
