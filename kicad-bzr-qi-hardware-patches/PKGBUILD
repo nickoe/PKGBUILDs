@@ -29,7 +29,7 @@ build() {
 	# Get the compatible BZR version of KiCad
 	msg "Connecting to BZR server..." 
   if [ ! -d ${srcdir}/${_bzrmod} ] ; then
-    bzr co --lightweight -r ${_bzrver} ${_bzrtrunk} ${_bzrmod}
+    bzr co -r ${_bzrver} ${_bzrtrunk} ${_bzrmod}
   else
     bzr up -r ${_bzrver} ${_bzrmod}
   fi
