@@ -1,0 +1,24 @@
+pkgname=cgal
+pkgver=4.0.2
+pkgrel=1
+_pkgid=31176
+pkgdesc="Computational Geometry Algorithms Library"
+arch=('i686' 'x86_64')
+url="http://www.cgal.org"
+source=(http://gforge.inria.fr/frs/download.php/$_pkgid/CGAL-$pkgver.tar.gz)
+depends=('mpfr' 'boost' 'gmp')
+optdepends=('qt: for CGAL_Qt4')
+makedepends=('cmake' 'xz')
+license=('GPL' 'LGPL')
+md5sums=('d0d1577f72fc8ab49fed3d966dae19da')
+
+build() {
+  cd $srcdir/CGAL-$pkgver
+  cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+  make
+  make install DESTDIR=$pkgdir
+
+  for _license in LICENSE{,.FREE_USE,.GPL,.LGPL}; do
+    install -D -m644 $srcdir/CGAL-$pkgver/$_license $pkgdir/usr/share/licenses/$pkgname/$_license
+  done
+}
