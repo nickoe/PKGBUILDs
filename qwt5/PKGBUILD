@@ -35,7 +35,7 @@ package() {
 
   # rename conflicting symlinks
   mv ${pkgdir}/usr/lib/libqwt.so ${pkgdir}/usr/lib/libqwt5.so
-	mv ${pkgdir}/usr/lib/qt4/plugins/designer/libqwt_designer_plugin.so ${pkgdir}/usr/lib/qt4/plugins/designer/libqwt_designer_plugin5.so
+  mv ${pkgdir}/usr/lib/qt4/plugins/designer/libqwt_designer_plugin.so ${pkgdir}/usr/lib/qt4/plugins/designer/libqwt_designer_plugin5.so
 
   # move html docs to proper place and move man pages to avoid conflict
   # with qwt from [extra]
