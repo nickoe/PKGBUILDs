@@ -1,0 +1,11 @@
+--- a/configure.ac	2013-04-30 20:41:10.832457667 +0200
++++ b/configure.ac	2013-04-30 20:41:08.795788170 +0200
+@@ -87,7 +87,7 @@
+ ACX_PTHREAD
+ if test x"$acx_pthread_ok" = xyes; then
+ 	CFLAGS="${CFLAGS} ${PTHREAD_CFLAGS}"
+-	CXXFLAGS="${CFLAGS} ${PTHREAD_CFLAGS}"
++	CXXFLAGS="${CXXFLAGS} ${PTHREAD_CFLAGS}"
+ fi
+ 
+ AC_SYS_POSIX_TERMIOS()
