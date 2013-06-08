@@ -1,7 +1,7 @@
 # Maintainer: Nick Østergaard <oe dot nick at gmail dot com>
 
 pkgname=kicad-bzr-qi-hardware-patches
-pkgver=20120109
+pkgver=20120119
 pkgrel=1
 pkgdesc="This is KiCad with the Qi Hardware patched added. This gives command line argument capabilities."
 arch=('i686' 'x86_64')
@@ -18,7 +18,7 @@ md5sums=()
 
 _bzrtrunk=lp:kicad
 _bzrmod=kicad.bzr
-_bzrver=2448
+_bzrver=3351
 
 _gitroot=git://projects.qi-hardware.com/eda-tools.git
 _gitname=eda-tools
@@ -56,7 +56,7 @@ build() {
 	# Build kicad
   mkdir -p build/Release && cd build/Release
 	cmake ../.. -DKICAD_STABLE_VERSION=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-	make -j 5
+	make -j 5 #-j<number of your cores>+1 is best
 }
 
 package() {
