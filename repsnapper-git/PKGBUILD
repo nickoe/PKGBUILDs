@@ -4,13 +4,13 @@
 # You can also contact me on http://blog.harvie.cz/
 
 pkgname=repsnapper-git
-pkgver=20111225
+pkgver=20120620
 pkgrel=1
 pkgdesc="RepSnapper RepRap control software"
 arch=('x86_64' 'i686')
 url="https://github.com/timschmidt/repsnapper"
 license=('GPL')
-depends=('libreprap-git' 'gtkglext')
+depends=('libreprap-git' 'gtkglext' 'libxml++')
 makedepends=(git)
 source=()
 md5sums=()

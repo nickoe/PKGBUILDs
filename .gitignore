@@ -7,6 +7,8 @@
 # Potential soruce files
 */*.zip
 */*.tar.gz
+*/*.tar.bz2
+*/*.tgz
 
 # Editors tempoary stuff
 *~
