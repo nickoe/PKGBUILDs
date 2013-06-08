@@ -1,7 +1,7 @@
 # Maintainer: Nick Østergaard <oe.nick at gmail.com>
 # Contribuator: Paul Kremser <to.kremser at gmail.com>
 pkgname=heekscad-git
-pkgver=20130318
+pkgver=20130530
 pkgrel=1
 pkgdesc="A free CAD program based on Open CASCADE"
 arch=('i686' 'x86_64')
@@ -12,7 +12,6 @@ makedepends=('git' 'cmake' 'python2' 'wxgtk' 'gtkglext' 'opencascade')
 provides=('heekscad')
 conflicts=('heekscad' 'heekscad-svn')
 install=heekscad.install
-source=( heekscad_PI.patch )
 noextract=()
 md5sums=('4d512b3d783489fd593c075662d0ca9e')
 
@@ -48,13 +47,14 @@ build() {
   export CASROOT=/opt/opencascade
   cmake CMAKE_INSTALL_PREFIX=/usr .
 
-  # Copy license
-  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 }
 
 package() {
   cd "$srcdir/$_gitname-build"
   make install DESTDIR=$pkgdir
+
+  # Copy license
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 
   # Remove symlink to be compatible with the community/tinyxml package
   rm $pkgdir/usr/lib/libtinyxml.so 
