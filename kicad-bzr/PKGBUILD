@@ -18,7 +18,7 @@ install=kicad.install
 source=('bzr+lp:kicad')
 #source=('bzr+lp:~cern-kicad/kicad/drawing_tool')
 md5sums=('SKIP')
-_bzrmod=${source[0]##*[:,/]}
+_bzrmod=${source[0]##*[:/]}
 
 BUILDENV=(ccache)
 
