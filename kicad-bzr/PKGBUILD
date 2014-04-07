@@ -2,7 +2,7 @@
 # Contributor: Marq Schneider <queueRAM@gmail.com>
 
 pkgname=kicad-bzr
-pkgver=4793
+pkgver=4790
 pkgrel=1
 pkgdesc="Electronic schematic and printed circuit board (PCB) design tools"
 arch=('i686' 'x86_64')
@@ -28,16 +28,16 @@ pkgver() {
 }
 
 prepare() {
-	cd "$srcdir/$_bzrmod"
-	msg2 "Patching..."
-#	patch -p0 -i ../../fix_45degree_undo.patch
-#	patch -p0 -i ../../text.patch # fixed in 4563
-#	patch -p0 -i ../../dxf_plot.patch
-#	patch -p0 -i ../../kicad-dxf-3d.patch
+  cd "$srcdir/$_bzrmod"
+  msg2 "Patching..."
+# patch -p0 -i ../../fix_45degree_undo.patch
+# patch -p0 -i ../../text.patch # fixed in 4563
+# patch -p0 -i ../../dxf_plot.patch
+# patch -p0 -i ../../kicad-dxf-3d.patch
 # patch -p0 -i ../../bug1236583.patch
-#	patch -p0 -i ../../bzr-revno.patch
+# patch -p0 -i ../../bzr-revno.patch
 # patch -p0 -i ../../export_VRML.patch
-# patch -p0 -i ../../gerber-kicad.patch # fixed in 4736 	
+# patch -p0 -i ../../gerber-kicad.patch # fixed in 4736   
 #patch -p0 -i ../../boost_skip.patch
 #patch -p1 -i ../../wheel_wx30.patch # fixed in 4756
 #patch -p0 -i ../../wxchar.patch
@@ -50,42 +50,42 @@ bzr revno --tree
 }
 
 build() {
-	# python3 incompatibility hax
-	mkdir -p $srcdir/bin                                                          
-#	ln -s -f /usr/bin/python2 $srcdir/bin/python                                  
+  # python3 incompatibility hax
+  mkdir -p $srcdir/bin                                                          
+# ln -s -f /usr/bin/python2 $srcdir/bin/python                                  
 #  export PATH=$srcdir/bin:$PATH                                                 
-#	python --version            
+# python --version            
 
   cd "$srcdir/$_bzrmod"
-	echo $source
-	echo ${source[0]##*/}
-	echo $_bzrmod
-	sleep 10
-	bzrnick=$(bzr nick)
+  echo $source
+  echo ${source[0]##*/}
+  echo $_bzrmod
+  sleep 10
+  bzrnick=$(bzr nick)
   mkdir -p build/Release
   cd build/Release
-  #cmake ../.. -DKICAD_STABLE_VERSION=ON				\
+  #cmake ../.. -DKICAD_STABLE_VERSION=ON        \
   cmake ../.. -DCMAKE_BUILD_TYPE=Release      \
-							-DUSE_IMAGES_IN_MENUS=ON        \
+              -DUSE_IMAGES_IN_MENUS=ON        \
               -DBUILD_GITHUB_PLUGIN=ON        \
               -DKICAD_SCRIPTING=OFF            \
               -DKICAD_SCRIPTING_MODULES=OFF    \
               -DKICAD_SCRIPTING_WXPYTHON=OFF   \
-							-DKICAD_BUILD_STATIC=OFF        \
-							-DKICAD_BUILD_DYNAMIC=OFF       \
-							-DKICAD_SKIP_BOOST=ON           \
-							-DKICAD_REPO_NAME=$bzrnick			\
+              -DKICAD_BUILD_STATIC=OFF        \
+              -DKICAD_BUILD_DYNAMIC=OFF       \
+              -DKICAD_SKIP_BOOST=ON           \
+              -DKICAD_REPO_NAME=$bzrnick      \
               -DCMAKE_INSTALL_PREFIX=/usr
-	#-DKICAD_BUILD_STATIC=ON   fails with the glew lib error make[2]:
-	#*** No rule to make target '../../glew_root/lib/libGLEW.a', needed
-	#by 'cvpcb/cvpcb'.  Stop.
+  #-DKICAD_BUILD_STATIC=ON   fails with the glew lib error make[2]:
+  #*** No rule to make target '../../glew_root/lib/libGLEW.a', needed
+  #by 'cvpcb/cvpcb'.  Stop.
 
 
-	# Remember to remind Mdx4 about the glew lib/lib64 thing after he
-	# is finsihed with the wxpython stuff he is doing
+  # Remember to remind Mdx4 about the glew lib/lib64 thing after he
+  # is finsihed with the wxpython stuff he is doing
 
-	# Hax that makes it possible to build with scripting
-#	sed -i 's/3.3m/2.7/g' CMakeCache.txt
+  # Hax that makes it possible to build with scripting
+# sed -i 's/3.3m/2.7/g' CMakeCache.txt
 
   make -j4
   #VERBOSE=1 make -j4
@@ -95,6 +95,6 @@ package() {
   cd "$srcdir/$_bzrmod/build/Release"
   make DESTDIR="$pkgdir" install
 
-	mkdir -p "$pkgdir/etc/profile.d"
-	echo "export KIGITHUB=https://github.com/KiCad" >	"$pkgdir/etc/profile.d/kicad.sh"
+  mkdir -p "$pkgdir/etc/profile.d"
+  echo "export KIGITHUB=https://github.com/KiCad" > "$pkgdir/etc/profile.d/kicad.sh"
 }
