@@ -2,7 +2,7 @@
 # Contributor: Marq Schneider <queueRAM@gmail.com>
 
 pkgname=kicad-bzr
-pkgver=4790
+pkgver=4803
 pkgrel=1
 pkgdesc="Electronic schematic and printed circuit board (PCB) design tools"
 arch=('i686' 'x86_64')
@@ -38,12 +38,13 @@ prepare() {
 # patch -p0 -i ../../bzr-revno.patch
 # patch -p0 -i ../../export_VRML.patch
 # patch -p0 -i ../../gerber-kicad.patch # fixed in 4736   
-#patch -p0 -i ../../boost_skip.patch
+patch -p0 -i ../../boost_skip.patch
 #patch -p1 -i ../../wheel_wx30.patch # fixed in 4756
 #patch -p0 -i ../../wxchar.patch
 #patch -p1 -i ../../sch_field.patch
 #patch -p1 -i ../../python_26.patch
 #patch -p1 -i ../../component-chooser-experiment.patch
+patch -p0 -i ../../fix-multiline-vrml.patch
 bzr revno --tree
 bzr update -r$pkgver
 bzr revno --tree
