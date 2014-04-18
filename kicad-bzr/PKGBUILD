@@ -1,12 +1,13 @@
 # Maintainer: Kyle Keen <keenerd@gmail.com>
 # Contributor: Marq Schneider <queueRAM@gmail.com>
+# Contributor: Nick Østergaard <oe.nick at gmail dot com>
 
 pkgname=kicad-bzr
-pkgver=4803
+pkgver=4805
 pkgrel=1
 pkgdesc="Electronic schematic and printed circuit board (PCB) design tools"
 arch=('i686' 'x86_64')
-url="http://iut-tice.ujf-grenoble.fr/kicad/"
+url="http://kicad-pcb.org/"
 license=('GPL')
 depends=('glu' 'wxgtk' 'hicolor-icon-theme' 'desktop-file-utils')
 makedepends=('cmake' 'bzr' 'bzrtools' 'zlib' 'mesa')
@@ -31,12 +32,13 @@ prepare() {
   cd "$srcdir/$_bzrmod"
   msg2 "Patching..."
 
-	patch -p0 -i ../../boost_skip.patch
-	patch -p0 -i ../../fix-multiline-vrml.patch
+  patch -p0 -i ../../boost_skip.patch
+  patch -p0 -i ../../fix-multiline-vrml.patch
+  patch -p1 -i ../../kicad_template_full.patch
 
-	bzr revno --tree
-	bzr update -r$pkgver
-	bzr revno --tree
+  bzr revno --tree
+  bzr update -r$pkgver
+  bzr revno --tree
 }
 
 build() {
@@ -79,8 +81,8 @@ build() {
   # Hax that makes it possible to build with scripting
 # sed -i 's/3.3m/2.7/g' CMakeCache.txt
 
-  make -j4
-  #VERBOSE=1 make -j4
+  #make -j4
+  VERBOSE=1 make -j1
 }
 
 package() {
