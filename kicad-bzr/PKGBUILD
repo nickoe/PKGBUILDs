@@ -34,7 +34,6 @@ prepare() {
 
   patch -p0 -i ../../boost_skip.patch
   patch -p0 -i ../../fix-multiline-vrml.patch
-  patch -p1 -i ../../kicad_template_full.patch
 
   bzr revno --tree
   bzr update -r$pkgver
