@@ -33,7 +33,6 @@ prepare() {
   msg2 "Patching..."
 
   patch -p0 -i ../../boost_skip.patch
-  patch -p0 -i ../../fix-multiline-vrml.patch
 
   bzr revno --tree
   bzr update -r$pkgver
