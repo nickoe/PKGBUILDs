@@ -3,7 +3,7 @@
 # Contributor: Nick Østergaard <oe.nick at gmail dot com>
 
 pkgname=kicad-bzr
-pkgver=4805
+pkgver=4863
 pkgrel=1
 pkgdesc="Electronic schematic and printed circuit board (PCB) design tools"
 arch=('i686' 'x86_64')
@@ -32,8 +32,6 @@ prepare() {
   cd "$srcdir/$_bzrmod"
   msg2 "Patching..."
 
-  patch -p0 -i ../../boost_skip.patch
-
   bzr revno --tree
   bzr update -r$pkgver
   bzr revno --tree
@@ -59,9 +57,9 @@ build() {
   cmake ../.. -DCMAKE_BUILD_TYPE=Release      \
               -DUSE_IMAGES_IN_MENUS=ON        \
               -DBUILD_GITHUB_PLUGIN=ON        \
-              -DKICAD_SCRIPTING=OFF            \
-              -DKICAD_SCRIPTING_MODULES=OFF    \
-              -DKICAD_SCRIPTING_WXPYTHON=OFF   \
+              -DKICAD_SCRIPTING=ON            \
+              -DKICAD_SCRIPTING_MODULES=ON    \
+              -DKICAD_SCRIPTING_WXPYTHON=ON   \
               -DKICAD_BUILD_STATIC=OFF        \
               -DKICAD_BUILD_DYNAMIC=OFF       \
               -DKICAD_SKIP_BOOST=ON           \
@@ -79,8 +77,8 @@ build() {
   # Hax that makes it possible to build with scripting
 # sed -i 's/3.3m/2.7/g' CMakeCache.txt
 
-  #make -j4
-  VERBOSE=1 make -j1
+  make -j1
+  #VERBOSE=1 make -j1
 }
 
 package() {
