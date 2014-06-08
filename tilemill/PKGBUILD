@@ -1,12 +1,13 @@
 # Maintainer: Nick Østergaard <oe.nick at gmail dot com>
 pkgname=tilemill
 pkgver=0.10.1
-pkgrel=3
+pkgrel=4
 pkgdesc="A modern map design studio"
 arch=(any)
 url="https://github.com/mapbox/tilemill"
 license=(BSD)
-depends=(nodejs mapnik desktop-file-utils webkitgtk2 boost)
+depends=(nodejs nodejs-node-gyp mapnik desktop-file-utils webkitgtk2 boost)
+conflicts=(tilemill-git)
 source=(https://github.com/mapbox/$pkgname/archive/v$pkgver.zip \
         tilemill.png \
         tilemill.desktop \

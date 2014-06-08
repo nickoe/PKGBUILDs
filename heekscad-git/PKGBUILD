@@ -13,7 +13,6 @@ provides=('heekscad')
 conflicts=('heekscad' 'heekscad-svn')
 install=heekscad.install
 noextract=()
-md5sums=('4d512b3d783489fd593c075662d0ca9e')
 
 _gitroot=git://github.com/Heeks/heekscad.git
 _gitname=heekscad
