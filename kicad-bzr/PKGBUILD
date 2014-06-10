@@ -3,7 +3,7 @@
 # Contributor: Nick Østergaard <oe.nick at gmail dot com>
 
 pkgname=kicad-bzr
-pkgver=4931
+pkgver=4935
 pkgrel=1
 pkgdesc="Electronic schematic and printed circuit board (PCB) design tools"
 arch=('i686' 'x86_64')
@@ -90,6 +90,9 @@ build() {
 package() {
   cd "$srcdir/$_bzrmod/build/Release"
   make DESTDIR="$pkgdir" install
+
+  wget -q	https://raw.githubusercontent.com/KiCad/kicad-library/master/template/fp-lib-table.for-github	\
+		   -O "$pkgdir/usr/share/kicad/template/fp-lib-table.for-github"
 
   mkdir -p "$pkgdir/etc/profile.d"
   echo "export KIGITHUB=https://github.com/KiCad" > "$pkgdir/etc/profile.d/kicad.sh"

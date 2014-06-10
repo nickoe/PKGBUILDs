@@ -1,0 +1,19 @@
+pkgname=kicad-bzr
+
+post_install() {
+  gtk-update-icon-cache -q -t -f usr/share/icons/hicolor
+  update-mime-database usr/share/mime > /dev/null
+	echo "The KIGITHUB environmet variable is set in profile.d," 
+	echo "so make sure to restart your desktop session to reaload."
+	echo "And copy /usr/share/kicad/template/fp-lib-table.for-github"
+	echo "to \$HOME as fp-lib-table."
+
+}
+
+post_upgrade() {
+  post_install $1
+}
+
+post_remove() {
+  post_install $1
+}
