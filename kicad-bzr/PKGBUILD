@@ -40,18 +40,10 @@ prepare() {
 }
 
 build() {
-  # python3 incompatibility hax (not really needed when we can't build
-	# with python scripting)
-#  mkdir -p $srcdir/bin                                                          
-# ln -s -f /usr/bin/python2 $srcdir/bin/python                                  
-#  export PATH=$srcdir/bin:$PATH                                                 
-# python --version            
-
   cd "$srcdir/$_bzrmod"
   echo $source
   echo ${source[0]##*/}
   echo $_bzrmod
-  sleep 10
   bzrnick=$(bzr nick)
   mkdir -p build/Release
   cd build/Release
@@ -71,17 +63,6 @@ build() {
               -DKICAD_SKIP_BOOST=ON           \
               -DKICAD_REPO_NAME=$bzrnick      \
               -DCMAKE_INSTALL_PREFIX=/usr
-
-
-  #-DKICAD_BUILD_STATIC=ON   fails with the glew lib error make[2]:
-  #*** No rule to make target '../../glew_root/lib/libGLEW.a', needed
-  #by 'cvpcb/cvpcb'.  Stop.
-
-  # Remember to remind Mdx4 about the glew lib/lib64 thing after he
-  # is finsihed with the wxpython stuff he is doing
-
-  # Hax that makes it possible to build with scripting
-# sed -i 's/3.3m/2.7/g' CMakeCache.txt
 
   make -j4
   #VERBOSE=1 make -j1
