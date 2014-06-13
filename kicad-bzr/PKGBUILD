@@ -31,9 +31,8 @@ pkgver() {
 prepare() {
   cd "$srcdir/$_bzrmod"
   msg2 "Patching..."
-  patch -p0 -i ../../3d_draw.patch
-
-
+#  patch -p0 -i ../../3d_draw.patch
+	
   bzr revno --tree
   bzr update -r$pkgver
   bzr revno --tree
@@ -64,7 +63,7 @@ build() {
               -DKICAD_REPO_NAME=$bzrnick      \
               -DCMAKE_INSTALL_PREFIX=/usr
 
-  make -j4
+  make
   #VERBOSE=1 make -j1
 }
 
