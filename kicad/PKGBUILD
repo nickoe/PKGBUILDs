@@ -1,0 +1,61 @@
+# Maintainer: Kyle Keen <keenerd@gmail.com>
+# Contributor: Marq Schneider <queueRAM@gmail.com>
+# Contributor: Nick Østergaard <oe.nick at gmail dot com>
+
+pkgname=kicad
+pkgver=4.0.0_rc1
+_upver="${pkgver//_/-}"
+pkgrel=1
+pkgdesc="Electronic schematic and printed circuit board (PCB) design tools"
+arch=('i686' 'x86_64')
+url="http://kicad-pcb.org/"
+license=('GPL')
+depends=('glu' 'hicolor-icon-theme' 'desktop-file-utils' 'boost' 'swig'
+'wxpython' 'glew')
+makedepends=('cmake' 'bzr' 'bzrtools' 'zlib' 'mesa')
+conflicts=('kicad')
+provides=('kicad')
+install=kicad.install
+source=("https://launchpad.net/kicad/4.0/${_upver}/+download/kicad-${_upver}.tar.xz"
+        "kicad-i18n"::"git+https://github.com/KiCad/kicad-i18n.git")
+md5sums=('8b642d965f906e6a1a5747974832b080'
+         'SKIP')
+
+#BUILDENV=(ccache)
+
+build() {
+  cd "$srcdir/${pkgname}-${_upver}"
+  echo $source
+  echo ${source[0]##*/}
+  mkdir -p build/Release
+  cd build/Release
+  cmake ../.. -DCMAKE_BUILD_TYPE=Release      \
+              -DKICAD_REPO_NAME=stable        \
+              -DKICAD_BUILD_VERSION=${_upver} \
+              -DUSE_IMAGES_IN_MENUS=ON        \
+              -DBUILD_GITHUB_PLUGIN=ON        \
+              -DKICAD_SCRIPTING=ON            \
+              -DKICAD_SCRIPTING_MODULES=ON    \
+              -DKICAD_SCRIPTING_WXPYTHON=ON   \
+              -DKICAD_SKIP_BOOST=ON           \
+              -DCMAKE_INSTALL_PREFIX=/usr
+
+  make
+
+  # Configure the translationn installation build.
+  cd "${srcdir}"
+  [[ -d build-i18n ]] && rm -r build-i18n
+  mkdir build-i18n && cd build-i18n
+  cmake -DCMAKE_INSTALL_PREFIX=/usr ../kicad-i18n
+}
+
+package() {
+  cd "$srcdir/${pkgname}-${_upver}/build/Release"
+  make DESTDIR="$pkgdir" install
+
+  wget -q https://raw.githubusercontent.com/KiCad/kicad-library/master/template/fp-lib-table.for-github  \
+       -O "$pkgdir/usr/share/kicad/template/fp-lib-table.for-github"
+
+  cd "${srcdir}/build-i18n"
+  make DESTDIR=${pkgdir} install
+}
